@@ -1,3 +1,13 @@
+database:
+  dbType: "mysql"
+  dbUser: "eth_kdex"
+  dbPassword: "Eth_0_pwd"
+  dbHost: "127.0.0.1"
+  dbPort: 3306
+  dbName: "eth_kdex_dev"
+  showsql: false
+ethereum:
+  endpoint: "https://mainnet.infura.io/v3/d6f7ae662eb94fbca97980db33db35ae"
 log:
   path: "./block_parser.log"
   level: "debug"

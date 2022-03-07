@@ -58,29 +58,53 @@ func main() {
 	}
 	log.Logger().Info("ethclient succeed")
 	//Comptroller :0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b
+	// query := ethereum.FilterQuery{
+	// 	FromBlock: new(big.Int).SetInt64(7710733),
+	// 	// ToBlock:   new(big.Int).SetInt64(1111),
+	// 	// Addresses: []common.Address{
+	// 	// 	"",
+	// 	// },
+	// 	Topics: [][]common.Hash{{common.HexToHash("0x7ac369dbd14fa5ea3f473ed67cc9d598964a77501540ba6751eb0b3decf5870d")}},
+	// }
+	// logs, err := internal.GetEthLogs(context.Background(), client, query)
+	// if err != nil {
+	// 	log.Logger().Error(fmt.Sprintf("failed to GetEthLogs: %v", err))
+	// 	return
+	// }
+	// ct := model.Ctoken{}
+	// for _, lg := range logs {
+	// 	if common.Bytes2Hex(lg.Data) == "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000003d9819210a31b4961b30ef54be2aed79b9c9cd3b" {
+	// 		log.Logger().Info(lg.Address.Hex())
+	// 		ct.Address = lg.Address.Hex()
+	// 		ct.IsCtoken = 1
+
+	// 		ct.Insert(ct, config.GetMySQLStore())
+	// 	}
+	// }
+
 	query := ethereum.FilterQuery{
-		FromBlock: new(big.Int).SetInt64(7710733),
-		// ToBlock:   new(big.Int).SetInt64(1111),
-		// Addresses: []common.Address{
-		// 	"",
-		// },
-		Topics: [][]common.Hash{{common.HexToHash("0x7ac369dbd14fa5ea3f473ed67cc9d598964a77501540ba6751eb0b3decf5870d")}},
+		FromBlock: new(big.Int).SetInt64(14090831),
+		//ToBlock:   &big.Int{},
+		Addresses: []common.Address{common.HexToAddress("0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5"),
+			common.HexToAddress("0xB3319f5D18Bc0D84dD1b4825Dcde5d5f7266d407"),
+			common.HexToAddress("0x6C8c6b02E7b2BE14d4fA6022Dfd6d75921D90E4E"),
+			common.HexToAddress("0xA4C993E32876795ABf80842Adb0a241bb0EeCD47"),
+			common.HexToAddress("0x35a18000230da775cac24873d00ff85bccded550"),
+			common.HexToAddress("0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643")},
+		Topics: [][]common.Hash{{common.HexToHash("0x298637f684da70674f26509b10f07ec2fbc77a335ab1e7d6215a4b2484d8bb52")}},
 	}
 	logs, err := internal.GetEthLogs(context.Background(), client, query)
 	if err != nil {
 		log.Logger().Error(fmt.Sprintf("failed to GetEthLogs: %v", err))
 		return
 	}
-	ct := model.Ctoken{}
+	tx := model.Txlog{}
 	for _, lg := range logs {
-		//common.HexToAddress(lg.Topics[0].Hex())
-		//fmt.Println(lg.Topics[0].Hex())
-		if common.Bytes2Hex(lg.Data) == "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000003d9819210a31b4961b30ef54be2aed79b9c9cd3b" {
-			log.Logger().Info(lg.Address.Hex())
-			ct.Address = lg.Address.Hex()
-			ct.IsCtoken = 1
-
-			ct.Insert(ct, config.GetMySQLStore())
-		}
+		//log.Logger().Info(lg.Address.Hex())
+		tx.TxHash = lg.TxHash.Hex()
+		tx.BlockHash = lg.BlockHash.Hex()
+		tx.BlockNumber = lg.BlockNumber
+		//tx.Insert(tx, config.GetMySQLStore())
+		fmt.Println("\"" + tx.TxHash + "\",")
 	}
 }

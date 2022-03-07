@@ -14,6 +14,7 @@ require (
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/mattn/go-colorable v0.1.12 // indirect
 	github.com/natefinch/lumberjack v2.0.0+incompatible
+	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.10.1
 	go.uber.org/zap v1.17.0
 	golang.org/x/crypto v0.0.0-20210817164053-32db794688a5 // indirect
